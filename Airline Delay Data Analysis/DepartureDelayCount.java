@@ -13,31 +13,31 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class DepartureDelayCount {
 	public static void main(String[] args) throws Exception{
-		//ÀÔÃâ·Â µ¥ÀÌÅÍ °æ·Î È®ÀÎ
+		//ì…ì¶œë ¥ ë°ì´í„° ê²½ë¡œ í™•ì¸. Check the I/O data paths
 		Configuration conf = new Configuration();
 		if(args.length!=2){
 			System.out.println("Usage:WordCount<input><output>");
 			System.exit(2);
 		}
-		//Àâ ÀÌ¸§ ¼³Á¤
+		//ì¡ ì´ë¦„ ì„¤ì •.  Job Name Settings
 		Job job = new Job(conf, "DepartureDelayCount");
 		
-		//ÀÔÃâ·Â µ¥ÀÌÅÍ °æ·Î ¼³Á¤
+		//ì…ì¶œë ¥ ë°ì´í„° ê²½ë¡œ ì„¤ì •.  I/O data paths Settings
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
-		//Àâ Å¬·¡½º ¼³Á¤
+		//ì¡ í´ë˜ìŠ¤ ì„¤ì •.   Job class Settings
 		job.setJarByClass(DepartureDelayCount.class);
-		//¸ÅÆÛ Å¬·¡½º ¼³Á¤
+		//ë§¤í¼ í´ë˜ìŠ¤ ì„¤ì •   Mapper class Settings
 		job.setMapperClass(DepartureDelayCountMapper.class);
-		//¸®µà¼­ Å¬·¡½º ¼³Á¤
+		//ë¦¬ë“€ì„œ í´ë˜ìŠ¤ ì„¤ì •  Reduce class Settings
 		job.setReducerClass(DelayCountReducer.class);
 		
-		//ÀÔÃâ·Â µ¥ÀÌÅÍ Æ÷¸Ë ¼³Á¤
+		//ì…ì¶œë ¥ ë°ì´í„° í¬ë§· ì„¤ì • I/O data format Settings
 		job.setInputFormatClass(TextInputFormat.class);
 		job.setOutputFormatClass(TextOutputFormat.class);
 		
-		//Ãâ·ÂÅ° ¹× Ãâ·Â °ª À¯Çü ¼³Á¤
+		//ì¶œë ¥í‚¤ ë° ì¶œë ¥ ê°’ ìœ í˜• ì„¤ì •  Type of Output Key and output Value Settings
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 		
