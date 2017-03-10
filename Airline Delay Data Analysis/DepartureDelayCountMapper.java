@@ -9,20 +9,20 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class DepartureDelayCountMapper extends 
 	Mapper<LongWritable, Text, Text, IntWritable> {
-	//¸Ê Ãâ·Â °ª
+	//ë§µ ì¶œë ¥ ê°’  Output Value of Map
 	private final static IntWritable outputValue = new IntWritable(1);
 	
-	//¸Ê Ãâ·Â Å°
+	//ë§µ ì¶œë ¥ í‚¤  Output Value of Key
 	private Text outputKey = new Text();
 	
 	public void map(LongWritable key, Text value, Context context)
 		throws IOException, InterruptedException {
 			AirlinePerformanceParser parser = new AirlinePerformanceParser(value);
 			
-		//Ãâ·ÂÅ° ¼³Á¤
+		//ì¶œë ¥í‚¤ ì„¤ì •  Output key Settings
 		outputKey.set(parser.getYear() + "," + parser.getMonth());
 		
-		//Ãâ·Â µ¥ÀÌÅÍ »ý¼º
+		//ì¶œë ¥ ë°ì´í„° ìƒì„±  Output Data Creation
 		if(parser.getDepartureDelayTime() > 0){
 			context.write(outputKey, outputValue);
 		}
